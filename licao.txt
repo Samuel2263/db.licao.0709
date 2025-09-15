@@ -1,0 +1,39 @@
+Projeto Modelagem - Processo de Cupom
+
+  IDEF0 A-0: O processo principal é 'Gerenciar Uso de Cupom'. Entradas: dados do cliente,
+ disponibilidade do cupom; Controles: regras de validade, políticas antifraude; Saídas: pedido com
+ desconto ou rejeição do cupom; Mecanismos: sistema de checkout, serviço de auditoria.
+ IDEF0 A0: Atividades detalhadas:
+1) Exibir cupons elegíveis;
+ 2) Receber cupom inserido pelo cliente; 
+ 3) Validar regras do cupom; 
+ 4) Aplicar desconto ou rejeitar; 
+ 5) Registrar uso do cupom e finalizar pedido.
+
+ 
+5 Visões RM-ODP
+ Enterprise: O sistema tem como missão gerenciar cupons de desconto para clientes em um
+ processo seguro e rastreável, garantindo regras de negócio e conformidade legal.
+
+ Information: Os dados centrais incluem Cliente (CPF único), Cupom (código único, validade,
+ status), Pedido, Itens do Pedido e registros de auditoria do uso de cupons.
+
+ Computational: O sistema é dividido em módulos: exibição de cupons, validação de regras,
+ aplicação do desconto e auditoria. Cada módulo se comunica por APIs internas.
+
+ Engineering: Implementado sobre arquitetura cliente-servidor com serviços web para validação e
+ auditoria. O banco de dados centraliza informações de clientes, pedidos e cupons.
+
+ Technology: Utiliza frontend web/mobile, backend em linguagem moderna (Java/Python/Node),
+ banco de dados relacional (PostgreSQL/MySQL) e serviços de auditoria.
+
+ MER/DER: Entidades principais: Cliente (id_cliente PK, CPF único), Cupom (id_cupom PK, código
+ único, validade, status), Pedido (id_pedido PK, FK id_cliente, FK id_cupom), Produto (id_produto
+ PK), Item_Pedido (id_item PK, FK id_pedido, FK id_produto, quantidade).
+ Relacionamentos: Cliente faz Pedido (1:N), Cupom aplicado em Pedido (1:N), Pedido contém Itens
+ (1:N), Item refere Produto (N:1).
+ 
+ Relacionamento N:M: O relacionamento entre Pedido e Produto é N:M, resolvido pela tabela
+ Item_Pedido que contém as FKs id_pedido e id_produto, além da quantidade.
+ Atributos únicos: CPF do Cliente e Código do Cupom são marcados como UNIQUE no banco de
+ dados, garantindo integridade e evitando duplicidades
